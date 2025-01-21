@@ -1,28 +1,49 @@
 <template>
-  <header class="bg-white border-b border-gray-100">
-    <div class="flex items-center justify-between px-4 py-4 sm:px-6">
+  <header
+    class="bg-white dark:bg-[--backgroun-color-dark] shadow-sm text-[--sidebar-text-light] dark:text-[--sidebar-text-dark]"
+  >
+    <div class="flex items-center justify-between px-4 py-3 sm:px-6">
       <div class="flex items-center">
         <button
-          @click="sidebar = !sidebar"
-          class="text-gray-500 lg:hidden focus:outline-none"
+          @click="(sidebar = !sidebar), (activeMenuItem = null)"
+          class="p-1.5 rounded-lg bg-transparent"
         >
           <svg
-            class="w-6 h-6"
+            v-if="!sidebar"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-chevron-last bg-transparent"
           >
-            <path
-              d="M4 6H20M4 12H20M4 18H11"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
+            <path d="m7 18 6-6-6-6"></path>
+            <path d="M17 6v12"></path>
+          </svg>
+          <svg
+            v-if="sidebar"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-chevron-first bg-transparent"
+          >
+            <path d="m17 18-6-6 6-6"></path>
+            <path d="M7 6v12"></path>
           </svg>
         </button>
       </div>
-      <div class="relative inline-block">
+      <div class="relative inline-flex items-center space-x-3">
+        <flags />
         <button
           @click="onLogout"
           class="p-2 text-gray-400 transition-colors duration-300 rounded-full focus:outline-none hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100"
@@ -48,12 +69,13 @@
   </header>
 </template>
 <script setup>
-  import { useConfigStore } from '@/stores'
-  import { storeToRefs } from 'pinia'
-  const { sidebar } = storeToRefs(useConfigStore())
+import flags from "./header/FlagsComponet.vue";
+import { useConfigStore } from "@/stores";
+import { storeToRefs } from "pinia";
+const { sidebar, activeMenuItem } = storeToRefs(useConfigStore());
 </script>
 <style scoped>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 </style>
